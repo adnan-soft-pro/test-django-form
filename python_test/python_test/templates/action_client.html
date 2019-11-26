@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block ExtraHead %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block Content %}
+    <div class="card">
+        <form class="form action-form mt-3" method="post">
+            {% csrf_token %}
+            <div class="container-fluid">
+                {{ field.errors }}
+                <div class="row">
+                    <h1 class="container-fluid mb-3">
+                        Client {{client_title}}
+                    </h1>
+                </div>
+                <div class="row">
+                    {% for field in client_form %}
+                        <div class="col-md-6">
+                            <label for="{{ field.auto_id }}">
+                                {% if field.field.required %}
+                                    <span class="required">{% bootstrap_label field.label %}</span>
+                                {% else %}
+                                    {% bootstrap_label field.label %}
+                                {% endif %}
+                            </label>
+                            {% bootstrap_field field show_label=False form_group_class='form-group' %}
+                        </div>
+                    {% endfor %}
+                    <div class="col-md-12 client-button">
+                        {% if client_title == 'New' %}
+                            <button type="submit" class="btn btn-primary">Create Client</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary">Update Client</button>
+                        {% endif %}
+                        <a class="btn btn-secondary m-3" href="{% url 'view_clients' %}">Go Back</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

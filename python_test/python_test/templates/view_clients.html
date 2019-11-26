@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% load django_tables2 %}
+
+{% block ExtraHead %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block Content %}
+    <div class="card">
+        <div class="table-container">
+            {% if filter %}
+                <form action="" method="get" class="form form-inline">
+                    {% bootstrap_form filter.form layout="inline" form_group_class="form-group m-3" %}
+                    {% bootstrap_button "Search" %}
+                </form>
+            {% endif %}
+            <div class="client-table m-3">
+                {% render_table table "django_tables2/bootstrap.html" %}
+                {% if table.page %}
+                    {% bootstrap_pagination table.page pages_to_show=5 url=request.get_full_path %}
+                {% endif %}
+            </div>
+            <a href="{% url 'create_client' %}" class="btn btn-small btn-primary dark m-3">
+                <span class="hidden-phone"><i class="fa fa-user-plus"></i> Create Client</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block Script %}
+    <script>
+        $(document).ready(function() {
+            $("tr").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+{% endblock %}

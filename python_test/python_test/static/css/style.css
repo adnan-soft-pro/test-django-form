@@ -1,0 +1,17 @@
+.action-form span.required:after {
+    content: '*';
+    color: red;
+}
+
+.action-form label,
+h1 {
+    color: #666;
+}
+
+.action-form span.required {
+    color: #000;
+}
+
+.client-table tr {
+    cursor: pointer;
+}
